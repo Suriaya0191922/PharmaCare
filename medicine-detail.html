@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>PharmaCare - Your Trusted Medicine Information Portal</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4e73df;
+            --secondary-color: #f8f9fa;
+            --accent-color: #36b9cc;
+            --success-color: #1cc88a;
+            --warning-color: #f6c23e;
+            --danger-color: #e74a3b;
+            --dark-color: #5a5c69;
+            --light-color: #f8f9fa;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .navbar-brand {
+            font-weight: 800;
+            color: var(--primary-color) !important;
+        }
+
+        .hero-section {
+            padding: 80px 0;
+            background: linear-gradient(to right, #4e73df, #36b9cc);
+            color: white;
+            margin-bottom: 60px;
+        }
+
+        .hero-title {
+            font-weight: 800;
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .hero-buttons .btn {
+            padding: 12px 25px;
+            font-weight: 600;
+            border-radius: 30px;
+            margin-right: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .search-container {
+            max-width: 800px;
+            margin: -40px auto 50px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            background: #fff;
+            position: relative;
+            z-index: 10;
+        }
+
+        .search-form .input-group {
+            box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .search-form .form-control,
+        .search-form .form-select,
+        .search-form .btn {
+            border: none;
+            padding: 12px 15px;
+        }
+
+        .search-form .btn-primary {
+            background-color: var(--primary-color);
+        }
+
+        .feature-section {
+            margin-bottom: 80px;
+        }
+
+        .feature-card {
+            border-radius: 15px;
+            padding: 30px;
+            height: 100%;
+            background-color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            text-align: center;
+            border: none;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .feature-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+
+        .feature-description {
+            color: #6c757d;
+        }
+
+        .how-it-works {
+            background-color: white;
+            padding: 80px 0;
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            font-weight: 700;
+            margin-bottom: 50px;
+            color: var(--dark-color);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 3px;
+            background-color: var(--primary-color);
+            bottom: -15px;
+            left: 0;
+        }
+
+        .step-container {
+            position: relative;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .step-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+
+        .step-description {
+            color: #6c757d;
+        }
+
+        .step-container:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 25px;
+            right: -30px;
+            width: 60px;
+            height: 2px;
+            background-color: #e3e6f0;
+        }
+
+        .testimonial-section {
+            margin-bottom: 80px;
+        }
+
+        .testimonial-card {
+            padding: 30px;
+            border-radius: 15px;
+            background-color: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            height: 100%;
+            border: none;
+        }
+
+        .testimonial-content {
+            font-style: italic;
+            margin-bottom: 20px;
+            color: #6c757d;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        .cta-section {
+            background: linear-gradient(to right, var(--accent-color), var(--primary-color));
+            padding: 80px 0;
+            color: white;
+            margin-bottom: 80px;
+            border-radius: 15px;
+        }
+
+        .loading-container {
+            display: none;
+            margin: 30px 0;
+        }
+
+        .loading-spinner {
+            width: 3rem;
+            height: 3rem;
+        }
+
+        .results-container {
+            margin-top: 20px;
+        }
+
+        .medicine-card {
+            height: 100%;
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .medicine-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+
+        .no-results {
+            display: none;
+            padding: 20px;
+            background-color: rgba(231, 74, 59, 0.1);
+            border-radius: 10px;
+            color: var(--danger-color);
+            text-align: center;
+            font-weight: 600;
+        }
+
+        @media (max-width: 992px) {
+            .step-container:not(:last-child)::after {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 50px 0;
+            }
+
+            .hero-title {
+                font-size: 2.2rem;
+            }
+
+            .search-container {
+                margin-top: -20px;
+                padding: 20px;
+            }
+
+            .how-it-works, .feature-section, .testimonial-section {
+                padding: 40px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light sticky-top">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <i class="fas fa-capsules me-2"></i>PharmaCare
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="UserAccount.html">Create Account</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container text-center">
+        <h1 class="hero-title">Your Trusted Guide to Medicine Information</h1>
+        <p class="hero-subtitle">Find detailed information about medications, their uses, ingredients, and side effects - all in one place.</p>
+        <div class="hero-buttons">
+            <a href="#search" class="btn btn-light">Find Medicine</a>
+            <a href="#how-it-works" class="btn btn-outline-light">Learn More</a>
+        </div>
+    </div>
+</section>
+
+<!-- Search Container -->
+<div class="container" id="search">
+    <div class="search-container">
+        <div class="text-center mb-4">
+            <h2 class="h3 text-primary fw-bold mb-2">Find Your Medicine</h2>
+            <p class="text-muted">Search our comprehensive database for detailed medication information</p>
+        </div>
+
+        <!-- Search Form -->
+        <form id="search-form" class="search-form">
+            <div class="input-group">
+                <select name="type" id="type" class="form-select" style="max-width: 150px;">
+                    <option value="">All Types</option>
+                    <option value="allopathy">Allopathy</option>
+                    <option value="homeopathy">Homeopathy</option>
+                </select>
+                <input type="text" id="query" name="query" class="form-control" placeholder="Enter medicine name...">
+                <button class="btn btn-primary" type="submit" id="search-button">
+                    <i class="fas fa-search me-1"></i> Search
+                </button>
+            </div>
+        </form>
+
+        <!-- Loading Spinner -->
+        <div id="loading" class="loading-container text-center">
+            <div class="spinner-border loading-spinner text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-3 text-primary fw-bold">Searching for medicines...</p>
+        </div>
+
+        <!-- No Results Message -->
+        <div id="no-results" class="no-results mt-4">
+            <i class="fas fa-exclamation-circle me-2"></i>
+            <span id="no-results-message">No medicines found. Try a different search.</span>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results-container">
+            <h4 id="results-title" class="section-title d-none">Search Results</h4>
+            <div id="medicine-list" class="row g-4"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<section class="feature-section">
+    <div class="container">
+        <h2 class="text-center section-title mb-5">What We Offer</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <i class="fas fa-database feature-icon"></i>
+                    <h3 class="feature-title">Comprehensive Database</h3>
+                    <p class="feature-description">Access thousands of medicines from top pharmaceutical companies worldwide, covering both allopathic and homeopathic options.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <i class="fas fa-clipboard-list feature-icon"></i>
+                    <h3 class="feature-title">Detailed Information</h3>
+                    <p class="feature-description">Get complete details on ingredients, usage instructions, and possible side effects to make informed healthcare decisions.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <i class="fas fa-search feature-icon"></i>
+                    <h3 class="feature-title">Smart Search</h3>
+                    <p class="feature-description">Our intelligent search engine helps you find exactly what you're looking for quickly and efficiently.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="how-it-works" id="how-it-works">
+    <div class="container">
+        <h2 class="text-center section-title mb-5">How PharmaCare Works</h2>
+        <div class="row text-center">
+            <div class="col-lg-3 step-container">
+                <div class="step-number mx-auto">1</div>
+                <h3 class="step-title">Enter Medicine Name</h3>
+                <p class="step-description">Type in the name of any medicine you want to learn about in our search box.</p>
+            </div>
+            <div class="col-lg-3 step-container">
+                <div class="step-number mx-auto">2</div>
+                <h3 class="step-title">Select Medicine Type</h3>
+                <p class="step-description">Choose between allopathic and homeopathic medicines to narrow your search.</p>
+            </div>
+            <div class="col-lg-3 step-container">
+                <div class="step-number mx-auto">3</div>
+                <h3 class="step-title">Browse Results</h3>
+                <p class="step-description">Review the list of medicines that match your search criteria.</p>
+            </div>
+            <div class="col-lg-3 step-container">
+                <div class="step-number mx-auto">4</div>
+                <h3 class="step-title">View Detailed Information</h3>
+                <p class="step-description">Click on any medicine to see comprehensive details including ingredients and side effects.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonial-section">
+    <div class="container">
+        <h2 class="text-center section-title mb-5">What Our Users Say</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="testimonial-card">
+                    <p class="testimonial-content">"PharmaCare has been an invaluable resource for me as a pharmacy student. The detailed information about ingredients and side effects helps me study and understand medications better."</p>
+                    <div class="testimonial-author">- Sarah Johnson, Pharmacy Student</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="testimonial-card">
+                    <p class="testimonial-content">"As someone who takes multiple medications, this site helps me understand potential interactions and side effects. The search feature is incredibly easy to use."</p>
+                    <div class="testimonial-author">- Robert Chen, Patient</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="testimonial-card">
+                    <p class="testimonial-content">"I appreciate having information about both allopathic and homeopathic options all in one place. It makes comparing treatments much simpler for my practice."</p>
+                    <div class="testimonial-author">- Dr. Amelia Davis, General Practitioner</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<div class="container">
+    <div class="cta-section text-center">
+        <h2 class="mb-4 fw-bold">Ready to Find Your Medicine?</h2>
+        <p class="mb-4">Start searching our comprehensive database now to get all the information you need.</p>
+        <a href="#search" class="btn btn-light btn-lg">Search Medicines</a>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-white py-4 mt-5 border-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <p class="mb-0">&copy; 2025 PharmaCare. All rights reserved.</p>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <a href="#" class="text-decoration-none text-secondary me-3">Privacy Policy</a>
+                <a href="#" class="text-decoration-none text-secondary">Terms of Service</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- JavaScript for Dynamic Search -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchForm = document.getElementById('search-form');
+        const queryInput = document.getElementById('query');
+        const typeSelect = document.getElementById('type');
+        const medicineList = document.getElementById('medicine-list');
+        const noResults = document.getElementById('no-results');
+        const noResultsMessage = document.getElementById('no-results-message');
+        const loading = document.getElementById('loading');
+        const searchButton = document.getElementById('search-button');
+        const resultsTitle = document.getElementById('results-title');
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Search form submission
+        searchForm.addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const query = queryInput.value.trim();
+            const type = typeSelect.value;
+
+            if (!query) {
+                noResultsMessage.innerText = 'Please enter a search query.';
+                noResults.style.display = 'block';
+                medicineList.innerHTML = '';
+                resultsTitle.classList.add('d-none');
+                return;
+            }
+
+            // Show loading, hide previous results
+            loading.style.display = 'block';
+            noResults.style.display = 'none';
+            medicineList.innerHTML = '';
+            resultsTitle.classList.add('d-none');
+            searchButton.disabled = true;
+
+            try {
+                const apiUrl = `http://localhost:8080/api/medicine/search?query=${encodeURIComponent(query)}&type=${encodeURIComponent(type)}`;
+                const response = await fetch(apiUrl);
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch medicines');
+                }
+
+                const medicines = await response.json();
+
+                // Hide loading indicator
+                loading.style.display = 'none';
+                searchButton.disabled = false;
+
+                if (medicines.length > 0) {
+                    // Show results title with count
+                    resultsTitle.innerText = `Found ${medicines.length} result${medicines.length > 1 ? 's' : ''}`;
+                    resultsTitle.classList.remove('d-none');
+
+                    // Display results
+                    renderMedicineResults(medicines);
+                } else {
+                    noResultsMessage.innerText = 'No medicines found. Try a different search.';
+                    noResults.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Error fetching medicines:', error);
+                loading.style.display = 'none';
+                noResultsMessage.innerText = 'Error retrieving results. Please try again.';
+                noResults.style.display = 'block';
+                searchButton.disabled = false;
+            }
+        });
+
+        // Render search results
+        function renderMedicineResults(medicines) {
+            medicineList.innerHTML = '';
+
+            medicines.forEach(med => {
+                const card = document.createElement('div');
+                card.className = 'col-md-4 col-sm-6';
+
+                // Determine badge color based on medicine type
+                const badgeClass = med.type === 'allopathy' ? 'type-allopathy' : 'type-homeopathy';
+
+                card.innerHTML = `
+                    <div class="card medicine-card">
+                        <div class="card-body">
+                            <span class="badge medicine-type ${badgeClass}">
+                                ${med.type.charAt(0).toUpperCase() + med.type.slice(1)}
+                            </span>
+                            <h5 class="medicine-name">${med.name}</h5>
+                            <p class="medicine-company">${med.company}</p>
+                            <p class="medicine-description">
+                                ${med.description ? med.description.substring(0, 120) + (med.description.length > 120 ? '...' : '') : 'No description available'}
+                            </p>
+                            <a href="medicines.html?id=${med.id}" class="btn btn-view-details">
+                                View Details
+                            </a>
+                        </div>
+                    </div>
+                `;
+
+                medicineList.appendChild(card);
+            });
+        }
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
