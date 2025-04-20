@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmaCare - Login & Signup</title>
+    <style>
+        :root {
+            --primary-color: #2c6bac;
+            --secondary-color: #5cb85c;
+            --tertiary-color: #f0f8ff;
+            --text-color: #333;
+            --light-gray: #f5f5f5;
+            --medium-gray: #e0e0e0;
+            --dark-gray: #777;
+            --error-color: #d9534f;
+        }
+
+        * {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--tertiary-color);
+            background-image: linear-gradient(120deg, #e0f7fa 0%, #f0f8ff 100%);
+            padding: 20px;
+        }
+
+        .page-container {
+            display: flex;
+            width: 900px;
+            max-width: 95%;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .brand-section {
+            flex: 1;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            display: none; /* Hidden on mobile */
+        }
+
+        .brand-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('/api/placeholder/200/200');
+            background-size: cover;
+            opacity: 0.1;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .tagline {
+            font-size: 16px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .benefits {
+            position: relative;
+        }
+
+        .benefits ul {
+            list-style-type: none;
+            margin-top: 15px;
+        }
+
+        .benefits li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .benefits li::before {
+            content: "✓";
+            margin-right: 8px;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+
+        .form-section {
+            flex: 1;
+            background-color: white;
+            padding: 40px;
+        }
+
+        .form-container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            margin-bottom: 25px;
+            color: var(--primary-color);
+            font-size: 24px;
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 6px;
+            color: var(--text-color);
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 6px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(44, 107, 172, 0.2);
+        }
+
+        .input-group.with-icon {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            top: 38px;
+            right: 15px;
+            color: var(--dark-gray);
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .remember-me input {
+            margin-right: 8px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #1e5a96;
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 25px;
+            color: var(--dark-gray);
+            font-size: 14px;
+        }
+
+        .switch {
+            color: var(--primary-color);
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .switch:hover {
+            color: #1e5a96;
+            text-decoration: underline;
+        }
+
+        .forgot-password {
+            text-align: right;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .forgot-password a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+
+        .dashboard {
+            display: none;
+            padding: 30px;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+
+        .welcome-message {
+            font-size: 18px;
+        }
+
+        .user-info {
+            background-color: var(--light-gray);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .user-info p {
+            margin-bottom: 10px;
+        }
+
+        .dashboard-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .dashboard-actions button {
+            flex: 1;
+        }
+
+        .error-message {
+            color: var(--error-color);
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .success-message {
+            background-color: rgba(92, 184, 92, 0.1);
+            color: var(--secondary-color);
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .brand-section {
+                display: block;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .page-container {
+                flex-direction: column;
+            }
+
+            .form-section {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="page-container">
+    <div class="brand-section">
+        <div class="logo">PharmaCare</div>
+        <div class="tagline">Your health, our priority</div>
+
+        <div class="benefits">
+            <h3>Why choose PharmaCare?</h3>
+            <ul>
+                <li>Convenient medication management</li>
+                <li>24/7 pharmacist consultation</li>
+                <li>Automatic refill reminders</li>
+                <li>Home delivery options</li>
+                <li>Secure health information</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="form-section">
+        <div class="form-container" id="auth-container">
+            <h2 id="form-title">Login to PharmaCare</h2>
+
+            <div class="success-message" id="success-message"></div>
+
+            <div class="input-group with-icon">
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Enter your username" required>
+                <span class="input-icon">👤</span>
+                <div class="error-message" id="username-error"></div>
+            </div>
+
+            <div class="input-group with-icon">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter your password" required>
+                <span class="input-icon">🔒</span>
+                <div class="error-message" id="password-error"></div>
+            </div>
+
+            <div id="signup-fields" style="display: none;">
+                <div class="input-group with-icon">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="Enter your email address">
+                    <span class="input-icon">✉️</span>
+                    <div class="error-message" id="email-error"></div>
+                </div>
+
+                <div class="input-group with-icon">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" placeholder="Confirm your password">
+                    <span class="input-icon">🔒</span>
+                    <div class="error-message" id="confirm-password-error"></div>
+                </div>
+            </div>
+
+            <div class="remember-me" id="remember-container">
+                <input type="checkbox" id="remember-me">
+                <label for="remember-me">Remember me</label>
+            </div>
+
+            <div class="forgot-password" id="forgot-password-container">
+                <a href="#">Forgot Password?</a>
+            </div>
+
+            <button id="auth-button">Login</button>
+
+            <div class="auth-footer">
+                <p id="toggle-text">Don't have an account?</p>
+                <a href="#" class="switch" id="toggle-auth">Create an account</a>
+            </div>
+        </div>
+
+        <div class="form-container dashboard" id="dashboard-container">
+            <div class="dashboard-header">
+                <h2>PharmaCare Dashboard</h2>
+                <button id="logout-button" style="width: auto; padding: 8px 15px;">Logout</button>
+            </div>
+
+            <div class="welcome-message">
+                <h3>Welcome, <span id="user-name"></span>!</h3>
+                <p>Today is <span id="current-date"></span></p>
+            </div>
+
+            <div class="user-info">
+                <h4>Your Account Information</h4>
+                <p><strong>Username:</strong> <span id="account-username"></span></p>
+                <p><strong>Email:</strong> <span id="account-email"></span></p>
+                <p><strong>Member since:</strong> <span id="member-since"></span></p>
+            </div>
+
+            <div class="dashboard-actions">
+                <button style="background-color: var(--secondary-color);">Refill Prescription</button>
+                <button>View Medications</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const authContainer = document.getElementById("auth-container");
+    const dashboardContainer = document.getElementById("dashboard-container");
+    const formTitle = document.getElementById("form-title");
+    const authButton = document.getElementById("auth-button");
+    const toggleAuth = document.getElementById("toggle-auth");
+    const toggleText = document.getElementById("toggle-text");
+    const logoutButton = document.getElementById("logout-button");
+    const signupFields = document.getElementById("signup-fields");
+    const rememberContainer = document.getElementById("remember-container");
+    const forgotPasswordContainer = document.getElementById("forgot-password-container");
+    const successMessage = document.getElementById("success-message");
+
+    let isSignup = false;
+
+    // Toggle between login and signup
+    toggleAuth.addEventListener("click", (e) => {
+        e.preventDefault();
+        isSignup = !isSignup;
+
+        formTitle.innerText = isSignup ? "Create PharmaCare Account" : "Login to PharmaCare";
+        authButton.innerText = isSignup ? "Sign Up" : "Login";
+        toggleText.innerText = isSignup ? "Already have an account?" : "Don't have an account?";
+        toggleAuth.innerText = isSignup ? "Login here" : "Create an account";
+
+        signupFields.style.display = isSignup ? "block" : "none";
+        rememberContainer.style.display = isSignup ? "none" : "flex";
+        forgotPasswordContainer.style.display = isSignup ? "none" : "block";
+
+        // Clear form fields and errors
+        clearFormFields();
+        clearErrors();
+    });
+
+    // Function to clear form fields
+    function clearFormFields() {
+        document.getElementById("username").value = "";
+        document.getElementById("password").value = "";
+
+        if (document.getElementById("email")) {
+            document.getElementById("email").value = "";
+        }
+
+        if (document.getElementById("confirm-password")) {
+            document.getElementById("confirm-password").value = "";
+        }
+    }
+
+    // Function to clear error messages
+    function clearErrors() {
+        const errorElements = document.querySelectorAll(".error-message");
+        errorElements.forEach(element => {
+            element.style.display = "none";
+        });
+    }
+
+    // Handle form submission
+    authButton.addEventListener("click", async () => {
+        clearErrors();
+
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        // Validation
+        let isValid = true;
+
+        if (!username) {
+            showError("username-error", "Username is required");
+            isValid = false;
+        }
+
+        if (!password) {
+            showError("password-error", "Password is required");
+            isValid = false;
+        } else if (password.length < 6) {
+            showError("password-error", "Password must be at least 6 characters long");
+            isValid = false;
+        }
+
+        if (isSignup) {
+            const email = document.getElementById("email").value;
+            const confirmPassword = document.getElementById("confirm-password").value;
+
+            if (!email) {
+                showError("email-error", "Email is required");
+                isValid = false;
+            } else if (!isValidEmail(email)) {
+                showError("email-error", "Please enter a valid email address");
+                isValid = false;
+            }
+
+            if (!confirmPassword) {
+                showError("confirm-password-error", "Please confirm your password");
+                isValid = false;
+            } else if (password !== confirmPassword) {
+                showError("confirm-password-error", "Passwords do not match");
+                isValid = false;
+            }
+        }
+
+        if (!isValid) {
+            return;
+        }
+
+        // Mock API call for demonstration
+        try {
+            // In a real app, this would be a real API call
+            // const endpoint = isSignup ? "/api/auth/signup" : "/api/auth/login";
+            // const response = await fetch(`http://localhost:8080${endpoint}`, { ... });
+
+            // Mock response for demo purposes
+            if (isSignup) {
+                showSuccessMessage("Account created successfully! Please log in.");
+
+                // Switch to login form after successful signup
+                setTimeout(() => {
+                    isSignup = false;
+                    formTitle.innerText = "Login to PharmaCare";
+                    authButton.innerText = "Login";
+                    toggleText.innerText = "Don't have an account?";
+                    toggleAuth.innerText = "Create an account";
+                    signupFields.style.display = "none";
+                    rememberContainer.style.display = "flex";
+                    forgotPasswordContainer.style.display = "block";
+                    successMessage.style.display = "none";
+                }, 2000);
+            } else {
+                // Save user info to localStorage (in a real app, you'd use secure methods)
+                const userInfo = {
+                    username: username,
+                    email: "user@example.com", // This would come from the API in a real app
+                    memberSince: "March 2025"  // This would come from the API in a real app
+                };
+
+                localStorage.setItem("pharmaCareUser", JSON.stringify(userInfo));
+                showDashboard(userInfo);
+            }
+        } catch (error) {
+            showError("auth-error", "Something went wrong. Please try again.");
+        }
+    });
+
+    // Logout functionality
+    logoutButton.addEventListener("click", () => {
+        localStorage.removeItem("pharmaCareUser");
+        authContainer.style.display = "block";
+        dashboardContainer.style.display = "none";
+        clearFormFields();
+    });
+
+    // Function to show dashboard
+    function showDashboard(userInfo) {
+        authContainer.style.display = "none";
+        dashboardContainer.style.display = "block";
+
+        document.getElementById("user-name").innerText = userInfo.username;
+        document.getElementById("account-username").innerText = userInfo.username;
+        document.getElementById("account-email").innerText = userInfo.email || "Not provided";
+        document.getElementById("member-since").innerText = userInfo.memberSince;
+
+        // Display current date
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        const today = new Date();
+        document.getElementById("current-date").innerText = today.toLocaleDateString('en-US', options);
+    }
+
+    // Helper function to show error messages
+    function showError(elementId, message) {
+        const errorElement = document.getElementById(elementId);
+        if (errorElement) {
+            errorElement.innerText = message;
+            errorElement.style.display = "block";
+        }
+    }
+
+    // Helper function to show success message
+    function showSuccessMessage(message) {
+        successMessage.innerText = message;
+        successMessage.style.display = "block";
+    }
+
+    // Helper function to validate email format
+    function isValidEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    }
+
+    // Check if user is already logged in
+    window.onload = () => {
+        const savedUser = localStorage.getItem("pharmaCareUser");
+        if (savedUser) {
+            try {
+                const userInfo = JSON.parse(savedUser);
+                showDashboard(userInfo);
+            } catch (e) {
+                localStorage.removeItem("pharmaCareUser");
+            }
+        }
+    };
+</script>
+
+</body>
+</html>
